@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mairadb:10.7 # MariaDBイメージ
+    enviroment: # 環境変数
+      MARIADB_ROOT_PASSWORD: rootpass # ルートユーザーのパスワード
+      MARIADB_DATABASE: testdb # データベース名
+      MARIADB_USER: testuser # データベースのユーザー名
+      MARIADB_PASSWORD: testpass # データベースのパスワード
+    volumes:
+      - db-data: /var/lib/mysql
+volumes:
+  db-data:
