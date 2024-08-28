@@ -1,12 +1,26 @@
 services:
-  db:
+  db: # MariaDBのコンテナ
     image: mariadb:10.7 # MariaDBイメージ
     environment: # 環境変数
       MARIADB_ROOT_PASSWORD: rootpass # ルートユーザーのパスワード
-      MARIADB_DATABASE: testdb # データベース名
-      MARIADB_USER: testuser # データベースのユーザー名
-      MARIADB_PASSWORD: testpass # データベースのパスワード
+      MARIADB_DATABASE: wordpress # データベース名
+      MARIADB_USER: wordpress # データベースのユーザー名
+      MARIADB_PASSWORD: wordpress # データベースのパスワード
     volumes:
       - db-data:/var/lib/mysql
+  wordpress: # WordPressのコンテナ
+    image: wordpress:6.0 # WordPressイメージ
+    depends_on: # 依存関係を定義（コンテナの起動順序を制御する）
+      - db
+    environment: # 環境変数
+      WORDPRESS_DB_HOST: db # 接続するDBのコンテナ名
+      WORDPRESS_DB_NAME: wordpress # 接続するDBのデータベース名
+      WORDPRESS_DB_USER: wordpress # 接続するDBのユーザー名
+      WORDPRESS_DB_PASSWORD: wordpress # 接続するDBのパスワード
+    ports: # Dockerコンテナのポートとホストのポートの紐づけ
+      - "8080:80"
+    volumes:
+      - wordpress-data:/var/www/html
 volumes:
   db-data:
+  wordpress-data:
