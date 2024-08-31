@@ -3,7 +3,8 @@ services:
     build: .
     environment:
       FLASK_ENV: development
+      FLASK_APP: app.py
     ports:
       - "5000:5000"
     volumes:
-      - ./src:/usr/src/app
+      - ./src:/usr/src
