@@ -1,0 +1,11 @@
+services:
+  react:
+    build:
+      context: docker
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/workspace
+      - /workspace/my-app/node_modules
+    tty: true
